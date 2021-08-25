@@ -15,14 +15,18 @@ pub enum Error {
 }
 
 /// ChainPath is used to describe BIP-32 KeyChain path.
-/// #[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct ChainPath<'a> {
     path: Cow<'a, str>
 }
 
 impl<'a> ChainPath<'a> {
-    pub fn new<S>(path: S) -> Self where S: Into<Cow<'a, str>> {
-        Self { path: path.into() }
+    pub fn new<S>(path: S) -> Self 
+    where S: Into<Cow<'a, str>> 
+    {
+        Self { 
+            path: path.into() 
+        }
     }
 
     /// An SubPath iterator over the ChainPath from Root to child keys.
