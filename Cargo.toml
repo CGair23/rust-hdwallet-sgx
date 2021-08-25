@@ -1,0 +1,22 @@
+[package]
+name = "rust-hdwallet-sgx"
+version = "0.1.0"
+authors = ["CGair23 <chengeair23@sjtu.edu.cn>"]
+edition = "2018"
+
+[lib]
+name = "rust_hdwallet_sgx"
+crate-type = ["staticlib"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+[target.'cfg(not(target_env = "sgx"))'.dependencies]
+secp256k1-sgx       = { branch = "rust-sgx-sdkv1.1.3", git = "https://github.com/CGair23/rust-secp256k1-sgx.git", features=["rand"] }
+sgx_types           = { rev = "v1.1.3", git = "https://github.com/apache/teaclave-sgx-sdk.git" }
+sgx_tstd            = { rev = "v1.1.3", git = "https://github.com/apache/teaclave-sgx-sdk.git" }
+sgx_rand            = { rev = "v1.1.3", git = "https://github.com/apache/teaclave-sgx-sdk.git" }
+ring                = { tag = "v0.16.5", git = "https://github.com/mesalock-linux/ring-sgx" }
+rand                = { tag = "v0.7.3_sgx1.1.3", git = "https://github.com/mesalock-linux/rand-sgx" }
+hex                 = { git = "https://github.com/mesalock-linux/rust-hex-sgx.git" }
