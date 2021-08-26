@@ -14,7 +14,7 @@ pub mod key_index;
 pub mod traits;
 pub mod chain_path;
 
-pub use crate::chain_path::{
+pub use chain_path::{
     ChainPath, Error as ChainPathError, SubPath
 };
 
