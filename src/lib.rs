@@ -22,3 +22,7 @@ pub use key_index::KeyIndex;
 pub use extended_key::{
     ExtendedPrivKey, ExtendedPubKey
 };
+
+pub use key_chain::{
+    Derivation, KeyChain, DefaultKeyChain, 
+};
