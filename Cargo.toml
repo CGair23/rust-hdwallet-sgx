@@ -1,5 +1,5 @@
 [package]
-name = "rust-hdwallet-sgx"
+name = "hdwallet_sgx"
 version = "0.1.0"
 authors = ["CGair23 <chengeair23@sjtu.edu.cn>"]
 edition = "2018"
