@@ -37,3 +37,50 @@ pub trait KeyChain {
         chain_path: ChainPath,
     ) -> Result<(ExtendedPrivKey, Derivation)>;
 }
+
+pub struct DefaultKeyChain {
+    master_key: ExtendedPrivKey,
+}
+
+impl DefaultKeyChain {
+    pub fn new(master_key: ExtendedPrivKey) -> Self {
+        DefaultKeyChain { master_key }
+    }
+}
+
+impl KeyChain for DefaultKeyChain {
+    fn derive_private_key(
+        &self,
+        chain_path: ChainPath,
+    ) -> Result<(ExtendedPrivKey, Derivation)> {
+        let mut iter = chain_path.iter();
+        // chain_path must start with root
+        if iter.next() != Some(Ok(SubPath::Root)) {
+            return Err(ChainPathError::Invalid.into());
+        }
+        let mut key = self.master_key.clone();
+        let mut depth = 0;
+        let mut parent_key = None;
+        let mut key_index = None;
+        for sub_path in iter {
+            match sub_path? {
+                SubPath::Child(child_key_index) => {
+                    depth += 1;
+                    key_index = Some(child_key_index);
+                    let child_key = key.derive_private_key(child_key_index)?;
+                    parent_key = Some(key);
+                    key = child_key;
+                }
+                _ => return Err(ChainPathError::Invalid.into()),
+            }
+        }
+        Ok((
+            key,
+            Derivation {
+                depth,
+                parent_key,
+                key_index,
+            },
+        ))
+    }
+}
