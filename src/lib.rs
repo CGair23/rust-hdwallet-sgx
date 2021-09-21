@@ -24,5 +24,5 @@ pub use extended_key::{
 };
 
 pub use key_chain::{
-    Derivation, KeyChain, DefaultKeyChain, 
+    Derivation, KeyChain, DefaultKeyChain,
 };
